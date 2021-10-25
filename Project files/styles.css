@@ -1,0 +1,74 @@
+/* Navbar Section */
+.navbar-nav > li {
+  padding-left: 30px;
+  padding-right: 105px;
+}
+
+#first {
+  border-left: 2px solid #000;
+  padding-left: 50px;
+}
+.active {
+  color: black;
+}
+/* Dashboard Section */
+.dashboard {
+  border-radius: 10px;
+  width: 100%;
+  height: 600px;
+  margin-bottom: 50px;
+}
+.background {
+  background-color: #c4c4c463;
+  margin: 30px;
+  margin-top: 0px;
+  border-radius: 25px;
+  padding: 40px;
+}
+.line {
+  border: 1px solid black;
+}
+/* Popular car Section */
+.heading {
+  padding: 40px;
+  padding-left: 0;
+  padding-bottom: 0;
+}
+.car_img {
+  width: 80%;
+}
+.card-header {
+  padding: 0;
+}
+.card-body {
+  background-color: #2d2f36;
+  color: white;
+  padding-bottom: 0;
+  border-radius: 5px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+.card-title {
+  font-weight: 300;
+  text-align: start;
+  font-size: 25px;
+  padding-top: 20px;
+}
+.list-unstyled {
+  text-align: start;
+}
+.pad {
+  padding: 35px;
+}
+.location {
+  padding-top: 10px;
+  color: rgba(255, 255, 255, 0.74);
+  padding-bottom: 20px;
+}
+/* Footer Section */
+h6 {
+  text-align: center;
+}
+.first_footer {
+  padding-top: 50px;
+}
