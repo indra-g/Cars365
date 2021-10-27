@@ -1,0 +1,60 @@
+/* Navbar Section */
+.navbar-nav > li {
+  padding-left: 30px;
+  padding-right: 105px;
+}
+
+#first {
+  border-left: 2px solid #000;
+  padding-left: 50px;
+}
+#second {
+  font-weight: bolder;
+  text-decoration: underline;
+}
+.active {
+  color: black;
+}
+.background {
+  background-color: #c4c4c463;
+  margin: 30px;
+  margin-top: 0px;
+  border-radius: 25px;
+  padding: 40px;
+}
+/* Form Section */
+.col {
+  text-align: center;
+  border-right: #000 1px solid;
+  height: 600px;
+}
+.col-last {
+  border-right: 0px solid #c4c4c463;
+}
+.form-floating {
+  margin: 40px 60px;
+  color: #363636;
+  width: 70%;
+}
+.form-control {
+  background-color: #0000002f;
+}
+.heading {
+  text-align: center;
+}
+.btn-outline-dark {
+  background-color: #0000002f;
+  width: 290px;
+}
+.text {
+  margin: 80px 20px;
+}
+.text1 {
+  margin-bottom: 10px;
+}
+.choose {
+  margin: 30px;
+}
+.upload {
+  margin-top: 50px;
+}
