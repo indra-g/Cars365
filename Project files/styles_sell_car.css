@@ -3,13 +3,14 @@
   padding-left: 30px;
   padding-right: 105px;
 }
-
+li:hover {
+  text-decoration: underline;
+}
 #first {
   border-left: 2px solid #000;
   padding-left: 50px;
 }
 #second {
-  font-weight: bolder;
   text-decoration: underline;
 }
 .active {
