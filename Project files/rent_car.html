@@ -2,7 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Buy Car</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rent Car</title>
     <!-- Favicon -->
     <link
       rel="apple-touch-icon"
@@ -35,9 +37,10 @@
       crossorigin="anonymous"
     ></script>
     <!-- External stylesheet -->
-    <link rel="stylesheet" href="styles_buy_car.css" />
+    <link rel="stylesheet" href="styles_rent.css" />
   </head>
   <body>
+    <!-- Navbar Section -->
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.html"
@@ -61,18 +64,26 @@
             <li class="nav-item">
               <a
                 class="nav-link active"
+                id="second"
                 aria-current="page"
                 href="sell_car.html"
                 >Sell Car</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="auction_car.html"
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="auction_car.html"
                 >Auction Car</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="rent_car.html"
+              <a
+                class="nav-link active"
+                id="forth"
+                aria-current="page"
+                href="rent_car.html"
                 >Rent Car</a
               >
             </li>
@@ -86,123 +97,7 @@
       </div>
     </nav>
     <div class="background">
-      <h3 class="heading">Select a Brand</h3>
-      <div class="container">
-        <div class="row align-items-start">
-          <div class="col">
-            <a aria-current="page" href="#"
-              ><img
-                src="images/Company Logos/Screenshot 2021-10-25 at 21.44.29.png"
-                width="162"
-                height="104"
-                alt=""
-            /></a>
-          </div>
-          <div class="col">
-            <a aria-current="page" href="#"
-              ><img
-                src="images/Company Logos/Screenshot 2021-10-25 at 21.44.47.png"
-                width="162"
-                height="104"
-                alt=""
-            /></a>
-          </div>
-          <div class="col">
-            <a aria-current="page" href="#"
-              ><img
-                src="images/Company Logos/Screenshot 2021-10-25 at 21.45.04.png"
-                width="162"
-                height="104"
-                alt=""
-            /></a>
-          </div>
-          <div class="col">
-            <a aria-current="page" href="#"
-              ><img
-                src="images/Company Logos/Screenshot 2021-10-25 at 21.45.22.png"
-                width="162"
-                height="104"
-                alt=""
-            /></a>
-          </div>
-          <div class="col">
-            <a aria-current="page" href="#"
-              ><img
-                src="images/Company Logos/Screenshot 2021-10-25 at 21.45.31.png"
-                width="162"
-                height="104"
-                alt=""
-            /></a>
-          </div>
-          <div class="col">
-            <a aria-current="page" href="#"
-              ><img
-                src="images/Company Logos/Screenshot 2021-10-25 at 21.45.44.png"
-                width="162"
-                height="104"
-                alt=""
-            /></a>
-          </div>
-        </div>
-        <div class="row align-items-start row2">
-          <div class="col">
-            <a aria-current="page" href="#"
-              ><img
-                src="images/Company Logos/Screenshot 2021-10-25 at 21.45.58.png"
-                width="162"
-                height="104"
-                alt=""
-            /></a>
-          </div>
-          <div class="col">
-            <a aria-current="page" href="#"
-              ><img
-                src="images/Company Logos/Screenshot 2021-10-25 at 21.46.11.png"
-                width="162"
-                height="104"
-                alt=""
-            /></a>
-          </div>
-          <div class="col">
-            <a aria-current="page" href="#"
-              ><img
-                src="images/Company Logos/Screenshot 2021-10-25 at 21.46.24.png"
-                width="162"
-                height="104"
-                alt=""
-            /></a>
-          </div>
-          <div class="col">
-            <a aria-current="page" href="#"
-              ><img
-                src="images/Company Logos/Screenshot 2021-10-25 at 21.46.43.png"
-                width="162"
-                height="104"
-                alt=""
-            /></a>
-          </div>
-          <div class="col">
-            <a aria-current="page" href="#"
-              ><img
-                src="images/Company Logos/Screenshot 2021-10-25 at 21.46.54.png"
-                width="162"
-                height="104"
-                alt=""
-            /></a>
-          </div>
-          <div class="col">
-            <a aria-current="page" href="#"
-              ><img
-                src="images/Company Logos/Screenshot 2021-10-25 at 21.47.10.png"
-                width="162"
-                height="104"
-                alt=""
-            /></a>
-          </div>
-        </div>
-      </div>
-      <div class="line"></div>
-      <h3 class="heading heading1">Cars available to buy</h3>
+      <h3 class="heading heading1">Cars available to rent</h3>
       <h4 class="heading1 location">Select your location:</h4>
       <div class="dropdown">
         <button
@@ -228,7 +123,7 @@
       <div class="container">
         <div class="row align-items-start">
           <div class="col">
-            <div class="card mb-3" style="max-width: 540px">
+            <div class="card first mb-3" style="max-width: 540px">
               <div class="row g-0">
                 <div class="col-md-4">
                   <img
@@ -240,7 +135,7 @@
                 <div class="col-md-8">
                   <div class="card-body">
                     <h5 class="card-title">Mahindra XUV700</h5>
-                    <p class="card-text">Seller Price : 5 Lakh</p>
+                    <p class="card-text">Rent Price : 12₹/km</p>
                     <a class="arrow" href="#"
                       ><img src="images/arrow_right_white_48dp.svg" alt="arrow"
                     /></a>
@@ -261,7 +156,7 @@
                 <div class="col-md-8">
                   <div class="card-body">
                     <h5 class="card-title">Mahindra XUV700</h5>
-                    <p class="card-text">Seller Price : 5 Lakh</p>
+                    <p class="card-text">Rent Price : 12₹/km</p>
                     <a class="arrow" href="#"
                       ><img src="images/arrow_right_white_48dp.svg" alt="arrow"
                     /></a>
@@ -282,7 +177,7 @@
                 <div class="col-md-8">
                   <div class="card-body">
                     <h5 class="card-title">Mahindra XUV700</h5>
-                    <p class="card-text">Seller Price : 5 Lakh</p>
+                    <p class="card-text">Rent Price : 12₹/km</p>
                     <a class="arrow" href="#"
                       ><img src="images/arrow_right_white_48dp.svg" alt="arrow"
                     /></a>
@@ -348,16 +243,20 @@
             </div>
             <div class="toptexts">
               <h4>Mahindra XUV700</h4>
-              <h5>Seller Price : 5 Lakh</h5>
+              <h5>Rent Price : 12₹/Km</h5>
             </div>
             <div class="line1"></div>
             <div class="bottomtexts">
-              <h6>Seller name : Manoj S</h6>
+              <h6>Renter name : Manoj S</h6>
               <h6>Location : Bangalore, Karnataka</h6>
               <h6>Total KM driven : 20000 km</h6>
               <h6>Contact Details : +91 1234567890</h6>
+              <h6 class="text">
+                Contact the Renter for further information regarding advance and
+                formalities
+              </h6>
               <button type="button" class="btn btn-dark btn-sm button">
-                Contact Seller
+                Contact Renter
               </button>
             </div>
           </div>
