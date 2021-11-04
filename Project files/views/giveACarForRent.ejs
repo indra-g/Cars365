@@ -1,0 +1,115 @@
+<%-include("header")-%> 
+<div class="background">
+      <!-- Form Section -->
+      <div class="container">
+        <div class="row align-items-start">
+          <div class="col">
+            <h3 class="heading">Enter the details to post your car</h3>
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control top"
+                placeholder="First Name"
+                name="firstname"
+              />
+              <label for="floatingInput">Your Name</label>
+            </div>
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control top"
+                placeholder="Car Name"
+                name="carname"
+              />
+              <label for="floatingInput">Car Name</label>
+            </div>
+            <div class="form-floating">
+              <input
+                type="number"
+                class="form-control top"
+                placeholder="Selling Price"
+                name="sellingprice"
+              />
+              <label for="floatingInput">Renting price per km (in ₹)</label>
+            </div>
+            <div class="form-floating">
+              <input
+                type="number"
+                class="form-control top"
+                placeholder="Total KM Driven"
+                name="totalkmdriven"
+              />
+              <label for="floatingInput">Total KM Driven (in Km)</label>
+            </div>
+            <div class="form-floating">
+              <input
+                type="number"
+                class="form-control top"
+                placeholder="Mobile Number"
+                name="mobilenumber"
+              />
+              <label for="floatingInput">Mobile Number</label>
+            </div>
+            <div class="dropdown">
+              <button
+                class="btn btn-outline-dark dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton2"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Bangalore
+              </button>
+              <ul
+                class="dropdown-menu dropdown-menu-dark"
+                aria-labelledby="dropdownMenuButton2"
+              >
+                <li><a class="dropdown-item active" href="#">Hyderabad</a></li>
+                <li><a class="dropdown-item" href="#">Chennai</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">Thiruvananthapuram</a>
+                </li>
+                <li><a class="dropdown-item" href="#">Mumbai</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col">
+            <h3 class="heading">Upload your Images</h3>
+            <h6 class="text">
+              Make sure you upload the recent landscape images of all sides and
+              with good resolution below 5mb
+            </h6>
+            <div class="mb-3 choose">
+              <input
+                class="form-control"
+                type="file"
+                id="formFileMultiple"
+                multiple
+              />
+            </div>
+          </div>
+          <div class="col col-last">
+            <h3 class="heading">Final Check</h3>
+            <h6 class="text text1">
+              I have entered correct details up to my knowledge and am
+              responsible for any wrong information provided
+            </h6>
+            <div>
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="checkboxNoLabel"
+                value=""
+                aria-label="..."
+              />
+            </div>
+            <button type="button" class="btn btn-dark btn-md upload">
+              Give for rent
+            </button>
+            <h5 class="text">Successfully uploaded</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
