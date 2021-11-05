@@ -29,13 +29,14 @@
         <div class="col pad">
           <div class="card mb-4 rounded-3 shadow-sm">
             <div class="">
-              <img class="car_img" src="images/car-sample.jpeg" alt="car_img" />
+              <img class="car_img" src="data:image/<%=items[1].img1.contentType%>;base64,
+              <%=items[1].img1.data.toString('base64')%>" alt="car_img" />
             </div>
             <div class="card-body">
-              <h1 class="card-title">Mahindra XUV700</h1>
+              <h1 class="card-title"><%= items[1].carname %> </h1>
               <ul class="list-unstyled mt-3 mb-4">
-                <li>₹ 11.99 Lakh</li>
-                <li class="location">Location: Karur, Tamil nadu</li>
+                <li>₹ <%= items[1].sellingprice %></li>
+                <li class="location">Location: <%= items[1].location %></li>
               </ul>
             </div>
           </div>
@@ -43,13 +44,14 @@
         <div class="col pad">
           <div class="card mb-4 rounded-3 shadow-sm">
             <div class="">
-              <img class="car_img" src="images/car-sample.jpeg" alt="car_img" />
+              <img class="car_img" src="data:image/<%=items[2].img1.contentType%>;base64,
+              <%=items[2].img1.data.toString('base64')%>" alt="car_img" />
             </div>
             <div class="card-body">
-              <h1 class="card-title">Mahindra XUV700</h1>
+              <h1 class="card-title"><%= items[2].carname %> </h1>
               <ul class="list-unstyled mt-3 mb-4">
-                <li>₹ 11.99 Lakh</li>
-                <li class="location">Location: Karur, Tamil nadu</li>
+                <li>₹ <%= items[2].sellingprice %></li>
+                <li class="location">Location: <%= items[2].location %></li>
               </ul>
             </div>
           </div>

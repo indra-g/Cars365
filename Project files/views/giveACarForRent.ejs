@@ -5,12 +5,15 @@
         <div class="row align-items-start">
           <div class="col">
             <h3 class="heading">Enter the details to post your car</h3>
+            <form action="/rentupload" method="post" enctype="multipart/form-data">
             <div class="form-floating">
               <input
                 type="text"
                 class="form-control top"
                 placeholder="First Name"
                 name="firstname"
+                required
+                autocomplete="off"
               />
               <label for="floatingInput">Your Name</label>
             </div>
@@ -20,6 +23,8 @@
                 class="form-control top"
                 placeholder="Car Name"
                 name="carname"
+                required
+                autocomplete="off"
               />
               <label for="floatingInput">Car Name</label>
             </div>
@@ -29,8 +34,10 @@
                 class="form-control top"
                 placeholder="Selling Price"
                 name="sellingprice"
+                required
+                autocomplete="off"
               />
-              <label for="floatingInput">Renting price per km (in ₹)</label>
+              <label for="floatingInput">Selling Price (in ₹)</label>
             </div>
             <div class="form-floating">
               <input
@@ -38,6 +45,8 @@
                 class="form-control top"
                 placeholder="Total KM Driven"
                 name="totalkmdriven"
+                required
+                autocomplete="off"
               />
               <label for="floatingInput">Total KM Driven (in Km)</label>
             </div>
@@ -47,45 +56,35 @@
                 class="form-control top"
                 placeholder="Mobile Number"
                 name="mobilenumber"
+                required
+                autocomplete="off"
               />
               <label for="floatingInput">Mobile Number</label>
             </div>
-            <div class="dropdown">
-              <button
-                class="btn btn-outline-dark dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton2"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Bangalore
-              </button>
-              <ul
-                class="dropdown-menu dropdown-menu-dark"
-                aria-labelledby="dropdownMenuButton2"
-              >
-                <li><a class="dropdown-item active" href="#">Bangalore</a></li>
-                <li><a class="dropdown-item" href="#">Hyderabad</a></li>
-                <li><a class="dropdown-item" href="#">Chennai</a></li>
-                <li>
-                  <a class="dropdown-item" href="#">Thiruvananthapuram</a>
-                </li>
-                <li><a class="dropdown-item" href="#">Mumbai</a></li>
-              </ul>
-            </div>
+            <select name="location" class="form-select carcompany" aria-label="Default select example" required>
+              <option selected>Select your location</option>
+              <option value="Bangalore">Bangalore</option>
+              <option value="Hyderabad">Hyderabad</option>
+              <option value="Chennai">Chennai</option>
+              <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+              <option value="Mumbai">Mumbai</option>
+            </select>
           </div>
           <div class="col">
             <h3 class="heading">Upload your Images</h3>
             <h6 class="text">
-              Make sure you upload the recent landscape images of all sides and
+              Make sure you upload the recent 4 landscape images of all sides and
               with good resolution below 5mb
             </h6>
             <div class="mb-3 choose">
               <input
+                name="images"
                 class="form-control"
                 type="file"
-                id="formFileMultiple"
+                id="images"
                 multiple
+                required
+                autocomplete="off"
               />
             </div>
           </div>
@@ -95,19 +94,11 @@
               I have entered correct details up to my knowledge and am
               responsible for any wrong information provided
             </h6>
-            <div>
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="checkboxNoLabel"
-                value=""
-                aria-label="..."
-              />
-            </div>
-            <button type="button" class="btn btn-dark btn-md upload">
-              Give for rent
+            <button type="submit" class="btn btn-dark btn-md upload">
+              Upload Details
             </button>
-            <h5 class="text">Successfully uploaded</h5>
+            </form>
+            <h5 class="text"><%= status %> </h5>
           </div>
         </div>
       </div>

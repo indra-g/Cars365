@@ -8,9 +8,10 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set("view engine", "ejs");
-var carDetailsModel = require("./models.js");
+var carDetailsModel = require(__dirname + "/models/cardetails.js");
+var rentCarDetailsModel = require(__dirname + "/models/rentcardetails.js");
 mongoose.connect("mongodb://localhost:27017/Cars365DB", function () {
-  console.log("Succesfully connected to database");
+  console.log("Succesfully connected to database 🔥");
 });
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -28,6 +29,7 @@ app.get("/", function (req, res) {
       console.log(err);
       res.status(500).send("An error occurred", err);
     } else {
+      items.sort(() => Math.random() - 0.5);
       res.render("home", { stylesheet: "css/styles.css", items: items });
     }
   });
@@ -46,12 +48,24 @@ app.get("/auctioncar", function (req, res) {
 });
 
 app.get("/rentcar", function (req, res) {
-  res.render("rentCar", { stylesheet: "css/styles_rent.css" });
+  rentCarDetailsModel.find({}, (err, items) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("An error occurred", err);
+    } else {
+      items.sort(() => Math.random() - 0.5);
+      res.render("rentCar", {
+        stylesheet: "css/styles_rent.css",
+        items: items,
+      });
+    }
+  });
 });
 
 app.get("/giveacarforrent", function (req, res) {
   res.render("giveACarForRent", {
     stylesheet: "css/styles_give_car_for_rent.css",
+    status: "",
   });
 });
 
@@ -94,16 +108,66 @@ app.post("/upload", upload.array("images", 4), (req, res, next) => {
     if (err) {
       res.render("sellCar", {
         status: "Unable to upload at the moment please try again later",
-        stylesheet: "css/styles_sell_car.css",
+        stylesheet: "css/styles_give_car_for_rent.css",
       });
     } else {
       res.render("sellCar", {
-        status: "Successfully Uploaded",
+        status: "Successfully Uploaded 🔥",
+        stylesheet: "css/styles_give_car_for_rent.css",
+      });
+    }
+  });
+});
+
+app.post("/rentupload", upload.array("images", 4), (req, res, next) => {
+  var obj = {
+    name: req.body.firstname,
+    carname: req.body.carname,
+    rentingprice: req.body.sellingprice,
+    totalkmdriven: req.body.totalkmdriven,
+    mobilenumber: req.body.mobilenumber,
+    location: req.body.location,
+    purpose: "forrenting",
+    img1: {
+      data: fs.readFileSync(
+        path.join(__dirname + "/uploads/" + req.files[0].filename)
+      ),
+      contentType: "image/png",
+    },
+    img2: {
+      data: fs.readFileSync(
+        path.join(__dirname + "/uploads/" + req.files[1].filename)
+      ),
+      contentType: "image/png",
+    },
+    img3: {
+      data: fs.readFileSync(
+        path.join(__dirname + "/uploads/" + req.files[2].filename)
+      ),
+      contentType: "image/png",
+    },
+    img4: {
+      data: fs.readFileSync(
+        path.join(__dirname + "/uploads/" + req.files[3].filename)
+      ),
+      contentType: "image/png",
+    },
+  };
+  rentCarDetailsModel.create(obj, (err, item) => {
+    if (err) {
+      res.render("sellCar", {
+        status: "Unable to upload at the moment please try again later",
+        stylesheet: "css/styles_sell_car.css",
+      });
+    } else {
+      res.render("giveACarForRent", {
+        status: "Successfully Uploaded 🔥",
         stylesheet: "css/styles_sell_car.css",
       });
     }
   });
 });
+
 app.listen("4040", function () {
-  console.log("Server is up and running on port 4040");
+  console.log("Server is up and running on port 4040 🔥");
 });

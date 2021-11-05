@@ -93,3 +93,10 @@ li:hover {
 .first {
   margin-top: 30px;
 }
+.scroll {
+  width: 600px;
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: center;
+}
