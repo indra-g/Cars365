@@ -5,14 +5,10 @@ var multer = require("multer");
 var fs = require("fs");
 var path = require("path");
 var _ = require("lodash");
-var ejs = require("ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set("view engine", "ejs");
-var requestedid = "";
-var requestedcity = "";
-var status = "";
 var carDetailsModel = require(__dirname + "/models/cardetails.js");
 var rentCarDetailsModel = require(__dirname + "/models/rentcardetails.js");
 var auctionCarDetailsModel = require(__dirname +
@@ -54,7 +50,11 @@ nullitem = {
     contentType: "**",
   },
 };
-
+var requestedid = "";
+var requestedcity = "";
+var status = "";
+var startingbiddingprice = "";
+var currentbiddingprice = "";
 app.get("/", function (req, res) {
   carDetailsModel.find({}, (err, items) => {
     if (err) {
@@ -91,6 +91,7 @@ app.get("/auctioncar", function (req, res) {
         res.status(500).send("An error occurred", err);
       } else {
         currentbiddingprice = theitem.currentbidprice;
+        startingbiddingprice = theitem.startingbidprice;
         res.render("auctionCar", {
           stylesheet: "css/styles_auction.css",
           item: theitem,
@@ -208,18 +209,25 @@ app.post("/uploadauction", function (req, res) {
   const number = req.body.mobilenumber;
   const price = req.body.price;
   if (currentbiddingprice == "" || currentbiddingprice < price) {
-    auctionCarDetailsModel.findByIdAndUpdate("618671f5d44d2e9f44b2e06a", {
-      currentbidername: name,
-      currentbidermobilenumber: number,
-      currentbidprice: price,
-    }, function (err, result) {
-      if (err) {
-        console.log(err);
-      }
-      else {
-        status = "Succesfully Updated your request 🔥"
-      }
-    });
+    if (startingbiddingprice < price) {
+      auctionCarDetailsModel.findByIdAndUpdate(
+        "618671f5d44d2e9f44b2e06a",
+        {
+          currentbidername: name,
+          currentbidermobilenumber: number,
+          currentbidprice: price,
+        },
+        function (err, result) {
+          if (err) {
+            console.log(err);
+          } else {
+            status = "Succesfully Updated your request 🔥";
+          }
+        }
+      );
+    } else {
+      status = "Please Enter the value greater then Starting bidding price";
+    }
   } else if (currentbiddingprice > price) {
     status = "Please Enter the value greater then current bidding price";
   }

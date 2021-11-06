@@ -9,6 +9,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set("view engine", "ejs");
+var status = "";
 var auctionCarDetailsModel = require(__dirname +
   "/models/auctioncardetails.js");
 mongoose.connect("mongodb://localhost:27017/Cars365DB", function () {
@@ -24,8 +25,45 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage });
 
-app.get("/", function (req, res) {
+app.get("/updateauction", function (req, res) {
   res.render("auctioncaradmin", { status: "" });
+});
+
+app.get("/", function (req, res) {
+  auctionCarDetailsModel.findById(
+    "618671f5d44d2e9f44b2e06a",
+    function (err, item) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("An error occurred", err);
+      } else {
+        res.render("homepage", {
+          item: item,
+          status: status
+        });
+        status = "";
+      }
+    }
+  );
+});
+
+app.post("/updatedb", function (req, res) {
+  const days = req.body.numberofdays;
+  auctionCarDetailsModel.findByIdAndUpdate(
+    "618671f5d44d2e9f44b2e06a",
+    {
+      daysleft: days,
+    },
+    function (err, result) {
+      if (err) {
+        status = "Unable to Update at the moment please try again later";
+        res.redirect("/");
+      } else {
+        status = "Succesfully Updated 🔥";
+        res.redirect("/");
+      }
+    }
+  );
 });
 
 app.post("/upload", upload.array("images", 4), function (req, res, next) {
@@ -67,17 +105,21 @@ app.post("/upload", upload.array("images", 4), function (req, res, next) {
       contentType: "image/png",
     },
   };
-  auctionCarDetailsModel.replaceOne({_id: "618671f5d44d2e9f44b2e06a"}, auctioncardata, (err, item) => {
-    if (err) {
-      res.render("auctioncaradmin", {
-        status: "Unable to upload at the moment please try again later",
-      });
-    } else {
-      res.render("auctioncaradmin", {
-        status: "Successfully Uploaded 🔥",
-      });
+  auctionCarDetailsModel.replaceOne(
+    { _id: "618671f5d44d2e9f44b2e06a" },
+    auctioncardata,
+    (err, item) => {
+      if (err) {
+        res.render("auctioncaradmin", {
+          status: "Unable to upload at the moment please try again later",
+        });
+      } else {
+        res.render("auctioncaradmin", {
+          status: "Successfully Uploaded 🔥",
+        });
+      }
     }
-  });
+  );
 });
 
 app.listen(5050, function () {
