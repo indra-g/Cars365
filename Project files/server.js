@@ -4,10 +4,14 @@ var mongoose = require("mongoose");
 var multer = require("multer");
 var fs = require("fs");
 var path = require("path");
+var _ = require("lodash");
+var ejs = require("ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set("view engine", "ejs");
+var requestedid = "";
+var requestedcity = "";
 var carDetailsModel = require(__dirname + "/models/cardetails.js");
 var rentCarDetailsModel = require(__dirname + "/models/rentcardetails.js");
 mongoose.connect("mongodb://localhost:27017/Cars365DB", function () {
@@ -29,8 +33,14 @@ app.get("/", function (req, res) {
       console.log(err);
       res.status(500).send("An error occurred", err);
     } else {
-      items.sort(() => Math.random() - 0.5);
-      res.render("home", { stylesheet: "css/styles.css", items: items });
+      if (items.length < 3) {
+        res.render("home", { stylesheet: "css/styles.css", items: [] });
+        console.log(items.length);
+      } else {
+        items.sort(() => Math.random() - 0.5);
+        items.length = 3;
+        res.render("home", { stylesheet: "css/styles.css", items: items });
+      }
     }
   });
 });
@@ -48,16 +58,30 @@ app.get("/auctioncar", function (req, res) {
 });
 
 app.get("/rentcar", function (req, res) {
+  requestedcity="allcities"
   rentCarDetailsModel.find({}, (err, items) => {
     if (err) {
       console.log(err);
       res.status(500).send("An error occurred", err);
     } else {
-      items.sort(() => Math.random() - 0.5);
-      res.render("rentCar", {
-        stylesheet: "css/styles_rent.css",
-        items: items,
-      });
+      if (requestedid == "") {
+       res.render("rentCar", {
+         stylesheet: "css/styles_rent.css",
+         items: items,
+         cityname: "All Cities",
+         displayitem: items[0],
+       }); 
+      }
+      else {
+        rentCarDetailsModel.findById(requestedid, function (err, item) {
+          res.render("rentCar", {
+            stylesheet: "css/styles_rent.css",
+            items: items,
+            cityname: "All Cities",
+            displayitem: item,
+          });
+        });
+      }
     }
   });
 });
@@ -66,6 +90,96 @@ app.get("/giveacarforrent", function (req, res) {
   res.render("giveACarForRent", {
     stylesheet: "css/styles_give_car_for_rent.css",
     status: "",
+  });
+});
+
+function rentfindcity(location, res, requestedid) {
+  rentCarDetailsModel.find({ location: location }, (err, items) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("An error occurred", err);
+    } else {
+      nullitem = {
+        name: "**",
+        carname: "**",
+        rentingprice: "**",
+        totalkmdriven: "**",
+        mobilenumber: "**",
+        location: "**",
+        purpose: "**",
+        img1: {
+          data: "**",
+          contentType: "**",
+        },
+        img2: {
+          data: "**",
+          contentType: "**",
+        },
+        img3: {
+          data: "**",
+          contentType: "**",
+        },
+        img4: {
+          data: "**",
+          contentType: "**",
+        },
+      };
+      if (items.length == 0) {
+        res.render("rentCar", {
+          stylesheet: "css/styles_rent.css",
+          items: [],
+          cityname: location,
+          displayitem: nullitem,
+        });
+      } else {
+        requestedid = items[0]._id;
+        rentCarDetailsModel.findById(requestedid, function (err, item) {
+          res.render("rentCar", {
+            stylesheet: "css/styles_rent.css",
+            items: items,
+            cityname: items[0].location,
+            displayitem: item,
+          });
+        });
+      }
+    }
+  });
+}
+
+app.get("/:cityname", function (req, res) {
+  requestedcity = req.params.cityname;
+  switch (requestedcity) {
+    case "rentbangalore":
+      rentfindcity("Bangalore", res, requestedid);
+      break;
+    case "renthyderabad":
+      rentfindcity("Hyderabad", res, requestedid);
+      break;
+    case "rentchennai":
+      rentfindcity("Chennai", res, requestedid);
+      break;
+    case "rentthiruvananthapuram":
+      rentfindcity("Thiruvananthapuram", res, requestedid);
+      break;
+    case "rentmumbai":
+      rentfindcity("Mumbai", res, requestedid);
+      break;
+  }
+});
+
+app.post("/getdetails", function (req, res) {
+  requestedid = req.body.elementid;
+  rentCarDetailsModel.find({ _id: requestedid }, function (err, items) {
+    if (err) {
+      console.log(err);
+      res.status(500).send("An error occurred", err);
+    } else {
+      if (requestedcity == "allcities") {
+        res.redirect("/rentcar");
+      } else {
+        res.redirect("/" + requestedcity);
+      }
+    }
   });
 });
 

@@ -10,17 +10,18 @@
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          Bangalore
+          <%= cityname %>
         </button>
         <ul
           class="dropdown-menu dropdown-menu-dark"
           aria-labelledby="dropdownMenuButton2"
         >
-          <li><a class="dropdown-item active" href="#">Bangalore</a></li>
-          <li><a class="dropdown-item" href="#">Hyderabad</a></li>
-          <li><a class="dropdown-item" href="#">Chennai</a></li>
-          <li><a class="dropdown-item" href="#">Thiruvananthapuram</a></li>
-          <li><a class="dropdown-item" href="#">Mumbai</a></li>
+          <li><a class="dropdown-item" href="/rentcar">All Cities</a></li>
+          <li><a class="dropdown-item" href="/rentbangalore">Bangalore</a></li>
+          <li><a class="dropdown-item" href="/renthyderabad">Hyderabad</a></li>
+          <li><a class="dropdown-item" href="/rentchennai">Chennai</a></li>
+          <li><a class="dropdown-item" href="/rentthiruvananthapuram">Thiruvananthapuram</a></li>
+          <li><a class="dropdown-item" href="/rentmumbai">Mumbai</a></li>
         </ul>
       </div>
 
@@ -41,10 +42,13 @@
                 <div class="col-md-8">
                   <div class="card-body">
                     <h5 class="card-title"><%= element.carname %></h5>
-                    <p class="card-text pad">₹ <%= element.rentingprice %> /km</p>
-                    <a class="arrow" href="#"
+                    <p class="card-text margin">₹ <%= element.rentingprice %> /km</p>
+                    <form class="form" method="post" action="/getdetails">
+                      <input type="hidden" name="elementid" value="<%=element._id%>">
+                    <a class="arrow" onclick="this.parentNode.submit();"
                       ><img src="images/arrow_right_white_48dp.svg" alt="arrow"
                     /></a>
+                    </form>
                     <p class="card-text last">
                       Location: <%= element.location %>
                     </p>
@@ -63,21 +67,32 @@
               <div class="carousel-inner">
                 <div class="carousel-item active">
                   <img
-                    src="Images/car-sample.jpeg"
+                    src="data:image/<%=displayitem.img1.contentType%>;base64,
+                    <%=displayitem.img1.data.toString('base64')%>"
                     class="d-block width"
                     alt="..."
                   />
                 </div>
                 <div class="carousel-item">
                   <img
-                    src="Images/xuv700-exterior-right-front-three-quarter-2.jpeg"
+                    src="data:image/<%=displayitem.img2.contentType%>;base64,
+                    <%=displayitem.img2.data.toString('base64')%>"
                     class="d-block width"
                     alt="..."
                   />
                 </div>
                 <div class="carousel-item">
                   <img
-                    src="Images/xuv700xuv700leftsideview.jpeg"
+                    src="data:image/<%=displayitem.img3.contentType%>;base64,
+                    <%=displayitem.img3.data.toString('base64')%>"
+                    class="d-block width"
+                    alt="..."
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="data:image/<%=displayitem.img4.contentType%>;base64,
+                    <%=displayitem.img4.data.toString('base64')%>"
                     class="d-block width"
                     alt="..."
                   />
@@ -109,22 +124,19 @@
               </button>
             </div>
             <div class="toptexts">
-              <h4>Mahindra XUV700</h4>
-              <h5>Rent Price : ₹12/Km</h5>
+              <h4><%= displayitem.carname %></h4>
+              <h5>Rent Price : ₹<%= displayitem.rentingprice %>/Km</h5>
             </div>
             <div class="line1"></div>
             <div class="bottomtexts">
-              <h6>Renter name : Manoj S</h6>
-              <h6>Location : Coimbatore, Tamil nadu</h6>
-              <h6>Total KM driven : 20000 km</h6>
-              <h6>Contact Details : +91 1234567890</h6>
+              <h6>Renter name : <%= displayitem.name %></h6>
+              <h6>Location : <%= displayitem.location %></h6>
+              <h6>Total KM driven : <%= displayitem.totalkmdriven %> km</h6>
+              <h6>Contact Details : +91 <%= displayitem.mobilenumber %></h6>
               <h6 class="text">
                 Contact the Renter for further information regarding advance and
                 formalities
               </h6>
-              <button type="button" class="btn btn-dark btn-sm button">
-                Contact Renter
-              </button>
             </div>
           </div>
         </div>

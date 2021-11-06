@@ -11,51 +11,23 @@
       <!-- Popular Cars Section -->
       <h3 class="heading">Popular Cars available to buy</h3>
       <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-        <div class="col pad">
+        <% items.forEach(element => { %>
+          <div class="col pad">
           <div class="card mb-4 rounded-3 shadow-sm">
             <div class="">
-              <img class="car_img" src="data:image/<%=items[0].img1.contentType%>;base64,
-              <%=items[0].img1.data.toString('base64')%>" alt="car_img" />
+              <img class="car_img" src="data:image/<%=element.img1.contentType%>;base64,
+              <%=element.img1.data.toString('base64')%>" alt="car_img" />
             </div>
             <div class="card-body">
-              <h1 class="card-title"><%= items[0].carname %> </h1>
+              <h1 class="card-title"><%= element.carname %> </h1>
               <ul class="list-unstyled mt-3 mb-4">
-                <li>₹ <%= items[0].sellingprice %></li>
-                <li class="location">Location: <%= items[0].location %></li>
+                <li>₹ <%= element.sellingprice %></li>
+                <li class="location">Location: <%= element.location %></li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="col pad">
-          <div class="card mb-4 rounded-3 shadow-sm">
-            <div class="">
-              <img class="car_img" src="data:image/<%=items[1].img1.contentType%>;base64,
-              <%=items[1].img1.data.toString('base64')%>" alt="car_img" />
-            </div>
-            <div class="card-body">
-              <h1 class="card-title"><%= items[1].carname %> </h1>
-              <ul class="list-unstyled mt-3 mb-4">
-                <li>₹ <%= items[1].sellingprice %></li>
-                <li class="location">Location: <%= items[1].location %></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col pad">
-          <div class="card mb-4 rounded-3 shadow-sm">
-            <div class="">
-              <img class="car_img" src="data:image/<%=items[2].img1.contentType%>;base64,
-              <%=items[2].img1.data.toString('base64')%>" alt="car_img" />
-            </div>
-            <div class="card-body">
-              <h1 class="card-title"><%= items[2].carname %> </h1>
-              <ul class="list-unstyled mt-3 mb-4">
-                <li>₹ <%= items[2].sellingprice %></li>
-                <li class="location">Location: <%= items[2].location %></li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <% }) %>
       </div>
       <div class="line"></div>
       <!-- Footer Section -->
