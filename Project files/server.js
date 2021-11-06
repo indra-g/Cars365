@@ -12,8 +12,11 @@ app.use(express.json());
 app.set("view engine", "ejs");
 var requestedid = "";
 var requestedcity = "";
+var status = "";
 var carDetailsModel = require(__dirname + "/models/cardetails.js");
 var rentCarDetailsModel = require(__dirname + "/models/rentcardetails.js");
+var auctionCarDetailsModel = require(__dirname +
+  "/models/auctioncardetails.js");
 mongoose.connect("mongodb://localhost:27017/Cars365DB", function () {
   console.log("Succesfully connected to database 🔥");
 });
@@ -26,6 +29,31 @@ var storage = multer.diskStorage({
   },
 });
 var upload = multer({ storage: storage });
+nullitem = {
+  name: "**",
+  carname: "**",
+  rentingprice: "**",
+  totalkmdriven: "**",
+  mobilenumber: "**",
+  location: "**",
+  purpose: "**",
+  img1: {
+    data: "**",
+    contentType: "**",
+  },
+  img2: {
+    data: "**",
+    contentType: "**",
+  },
+  img3: {
+    data: "**",
+    contentType: "**",
+  },
+  img4: {
+    data: "**",
+    contentType: "**",
+  },
+};
 
 app.get("/", function (req, res) {
   carDetailsModel.find({}, (err, items) => {
@@ -54,25 +82,50 @@ app.get("/sellcar", function (req, res) {
 });
 
 app.get("/auctioncar", function (req, res) {
-  res.render("auctionCar", { stylesheet: "css/styles_auction.css" });
+  auctionCarDetailsModel.findById(
+    "618671f5d44d2e9f44b2e06a",
+    function (err, theitem) {
+      auctioncardetail = theitem;
+      if (err) {
+        console.log(err);
+        res.status(500).send("An error occurred", err);
+      } else {
+        currentbiddingprice = theitem.currentbidprice;
+        res.render("auctionCar", {
+          stylesheet: "css/styles_auction.css",
+          item: theitem,
+          status: status,
+        });
+        status = "";
+      }
+    }
+  );
 });
 
 app.get("/rentcar", function (req, res) {
-  requestedcity="allcities"
+  requestedcity = "allcities";
   rentCarDetailsModel.find({}, (err, items) => {
     if (err) {
       console.log(err);
       res.status(500).send("An error occurred", err);
     } else {
       if (requestedid == "") {
-       res.render("rentCar", {
-         stylesheet: "css/styles_rent.css",
-         items: items,
-         cityname: "All Cities",
-         displayitem: items[0],
-       }); 
-      }
-      else {
+        if (items.length == 0) {
+          res.render("rentCar", {
+            stylesheet: "css/styles_rent.css",
+            items: items,
+            cityname: "All Cities",
+            displayitem: nullitem,
+          });
+        } else {
+          res.render("rentCar", {
+            stylesheet: "css/styles_rent.css",
+            items: items,
+            cityname: "All Cities",
+            displayitem: items[0],
+          });
+        }
+      } else {
         rentCarDetailsModel.findById(requestedid, function (err, item) {
           res.render("rentCar", {
             stylesheet: "css/styles_rent.css",
@@ -99,31 +152,6 @@ function rentfindcity(location, res, requestedid) {
       console.log(err);
       res.status(500).send("An error occurred", err);
     } else {
-      nullitem = {
-        name: "**",
-        carname: "**",
-        rentingprice: "**",
-        totalkmdriven: "**",
-        mobilenumber: "**",
-        location: "**",
-        purpose: "**",
-        img1: {
-          data: "**",
-          contentType: "**",
-        },
-        img2: {
-          data: "**",
-          contentType: "**",
-        },
-        img3: {
-          data: "**",
-          contentType: "**",
-        },
-        img4: {
-          data: "**",
-          contentType: "**",
-        },
-      };
       if (items.length == 0) {
         res.render("rentCar", {
           stylesheet: "css/styles_rent.css",
@@ -132,15 +160,23 @@ function rentfindcity(location, res, requestedid) {
           displayitem: nullitem,
         });
       } else {
-        requestedid = items[0]._id;
-        rentCarDetailsModel.findById(requestedid, function (err, item) {
+        if (requestedid == "") {
           res.render("rentCar", {
             stylesheet: "css/styles_rent.css",
             items: items,
             cityname: items[0].location,
-            displayitem: item,
+            displayitem: nullitem,
           });
-        });
+        } else {
+          rentCarDetailsModel.findById(requestedid, function (err, item) {
+            res.render("rentCar", {
+              stylesheet: "css/styles_rent.css",
+              items: items,
+              cityname: items[0].location,
+              displayitem: item,
+            });
+          });
+        }
       }
     }
   });
@@ -165,6 +201,29 @@ app.get("/:cityname", function (req, res) {
       rentfindcity("Mumbai", res, requestedid);
       break;
   }
+});
+
+app.post("/uploadauction", function (req, res) {
+  const name = req.body.name;
+  const number = req.body.mobilenumber;
+  const price = req.body.price;
+  if (currentbiddingprice == "" || currentbiddingprice < price) {
+    auctionCarDetailsModel.findByIdAndUpdate("618671f5d44d2e9f44b2e06a", {
+      currentbidername: name,
+      currentbidermobilenumber: number,
+      currentbidprice: price,
+    }, function (err, result) {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        status = "Succesfully Updated your request 🔥"
+      }
+    });
+  } else if (currentbiddingprice > price) {
+    status = "Please Enter the value greater then current bidding price";
+  }
+  res.redirect("/auctioncar");
 });
 
 app.post("/getdetails", function (req, res) {

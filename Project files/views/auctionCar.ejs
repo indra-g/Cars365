@@ -12,21 +12,32 @@
               <div class="carousel-inner">
                 <div class="carousel-item active">
                   <img
-                    src="Images/lamborghiniurusexterior (1).jpeg"
+                    src="data:image/<%=item.img1.contentType%>;base64,
+                    <%=item.img1.data.toString('base64')%>"
                     class="d-block width"
                     alt="..."
                   />
                 </div>
                 <div class="carousel-item">
                   <img
-                    src="Images/lamborghiniurusexterior.jpeg"
+                    src="data:image/<%=item.img2.contentType%>;base64,
+                    <%=item.img2.data.toString('base64')%>"
                     class="d-block width"
                     alt="..."
                   />
                 </div>
                 <div class="carousel-item">
                   <img
-                    src="Images/lamborghiniurusexterior (2).jpeg"
+                    src="data:image/<%=item.img3.contentType%>;base64,
+                    <%=item.img3.data.toString('base64')%>"
+                    class="d-block width"
+                    alt="..."
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="data:image/<%=item.img4.contentType%>;base64,
+                    <%=item.img4.data.toString('base64')%>"
                     class="d-block width"
                     alt="..."
                   />
@@ -58,26 +69,30 @@
               </button>
             </div>
             <div class="bottomtexts">
-              <h6>Fuel Type : Petrol</h6>
-              <h6>Engine : 3996 cc</h6>
-              <h6>Power and Torque : 650 bhp & 850 Nm</h6>
+              <h6>Fuel Type : <%= item.fueltype %></h6>
+              <h6>Engine : <%= item.eng %> cc</h6>
+              <h6>Power : <%= item.pow %> bhp</h6>
+              <h4 class="mar"><%= status %></h4>
             </div>
           </div>
           <div class="col col1">
-            <h4>Lamborghini Urus</h4>
-            <h5>Starting Bidding Price : 2.5 crore</h5>
-            <h5>Current Bidding Price : 2.7 crore</h5>
-            <h5>Days Left : 4 days</h5>
+            <h4><%= item.carname %></h4>
+            <h5>Starting Bidding Price : ₹ <%= item.startingbidprice %></h5>
+            <h5>Current Bidding Price : ₹ <%= item.currentbidprice %></h5>
+            <h5 class="time">Days Left : <%= item.daysleft %></h5>
             <div class="line"></div>
-            <h6>Car Owner Name : Gowtham T</h6>
-            <h6>Location : Tamil Nadu</h6>
-            <h6>Total KM driven : 102311 km</h6>
+            <h6>Car Owner Name : <%= item.carownername %></h6>
+            <h6>Location : <%= item.location %></h6>
+            <h6>Total KM driven : <%= item.totalkmdriven %> Km</h6>
+            <form action="/uploadauction" method="post">
             <div class="form-floating">
               <input
-                type="number"
+                type="text"
                 class="form-control top"
                 placeholder="Your Price"
-                name="yourprice"
+                name="name"
+                autocomplete="off"
+                required
               />
               <label for="floatingInput">Your Name</label>
             </div>
@@ -86,7 +101,9 @@
                 type="number"
                 class="form-control top"
                 placeholder="Your Price"
-                name="yourprice"
+                name="mobilenumber"
+                autocomplete="off"
+                required
               />
               <label for="floatingInput">Your Contact Number</label>
             </div>
@@ -95,11 +112,14 @@
                 type="number"
                 class="form-control top"
                 placeholder="Your Price"
-                name="yourprice"
+                name="price"
+                autocomplete="off"
+                required
               />
               <label for="floatingInput">Your Price (in ₹)</label>
-              <button type="button" class="btn btn-dark btn-md bid">Bid</button>
+              <button type="submit" class="btn btn-dark btn-md bid">Bid</button>
             </div>
+            </form>
           </div>
         </div>
       </div>
