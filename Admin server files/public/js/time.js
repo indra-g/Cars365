@@ -16,7 +16,7 @@ var x = setInterval(function () {
     minutes +
     "m " +
     seconds +
-    "s ";
+    "s (i.e, on "+time+")";
   if (distance < 0) {
     clearInterval(x);
     document.getElementById("time")[0].innerHTML = "Auction is about to end";

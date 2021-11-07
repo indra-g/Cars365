@@ -115,8 +115,6 @@ app.get("/auctioncar", function (req, res) {
   auctionCarDetailsModel.findById(
     "6187e6e3eaebc767a0e11586",
     function (err, theitem) {
-      console.log(theitem);
-      auctioncardetail = theitem;
       if (err) {
         console.log(err);
         res.status(500).send("An error occurred", err);
@@ -128,10 +126,10 @@ app.get("/auctioncar", function (req, res) {
           item: theitem,
           status: status,
         });
-        status = "";
       }
     }
   );
+  status = "";
 });
 
 app.get("/rentcar", function (req, res) {

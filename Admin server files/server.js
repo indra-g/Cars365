@@ -124,5 +124,5 @@ app.post("/upload", upload.array("images", 4), function (req, res, next) {
 });
 
 app.listen(process.env.Port, function () {
-  console.log("Server is up and running on port 5050");
+  console.log("Server is up and running on port 5050 🔥");
 });

@@ -1,4 +1,6 @@
 var time = document.getElementsByClassName("time")[0].innerHTML;
+var slicedtime = time.slice(0, 12);
+console.log(slicedtime);
 var countDownDate = new Date(time).getTime();
 var x = setInterval(function () {
   var now = new Date().getTime();
@@ -16,7 +18,7 @@ var x = setInterval(function () {
     minutes +
     "m " +
     seconds +
-    "s ";
+    "s (i.e on "+slicedtime+")";
   if (distance < 0) {
     clearInterval(x);
     document.getElementById("time")[0].innerHTML = "Auction is about to end";
