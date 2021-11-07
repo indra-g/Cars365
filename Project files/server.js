@@ -55,6 +55,7 @@ var requestedcity = "";
 var status = "";
 var startingbiddingprice = "";
 var currentbiddingprice = "";
+var company = "";
 app.get("/", function (req, res) {
   carDetailsModel.find({}, (err, items) => {
     if (err) {
@@ -63,7 +64,6 @@ app.get("/", function (req, res) {
     } else {
       if (items.length < 3) {
         res.render("home", { stylesheet: "css/styles.css", items: [] });
-        console.log(items.length);
       } else {
         items.sort(() => Math.random() - 0.5);
         items.length = 3;
@@ -74,7 +74,7 @@ app.get("/", function (req, res) {
 });
 
 app.get("/buycar", function (req, res) {
-  res.render("buyCar", { stylesheet: "css/styles_buy_car.css" });
+  res.render("buyCar1", { stylesheet: "css/styles_buy_car.css" });
 });
 
 app.get("/sellcar", function (req, res) {
@@ -204,6 +204,42 @@ app.get("/:cityname", function (req, res) {
   }
 });
 
+function buycardetails(company, res) {
+  if (company == "AllCompanies") {
+    carDetailsModel.find({}, (err, items) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("An error occurred", err);
+      } else {
+        res.render("buyCar2", {
+          stylesheet: "css/styles_buy_car.css",
+          items: items,
+        });
+      }
+    });
+    company = "";
+  } else {
+    carDetailsModel.find({ carcompany: company }, (err, items) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("An error occurred", err);
+      } else {
+        res.render("buyCar2", {
+          stylesheet: "css/styles_buy_car.css",
+          items: items,
+        });
+      }
+    });
+    company = "";
+  }
+}
+
+app.post("/updatecompany", function (req, res) {
+  const companyname = req.body.companyname;
+  company = companyname;
+  buycardetails(company, res);
+});
+
 app.post("/uploadauction", function (req, res) {
   const name = req.body.name;
   const number = req.body.mobilenumber;
@@ -256,6 +292,7 @@ app.post("/upload", upload.array("images", 4), (req, res, next) => {
     carcompany: req.body.company,
     carname: req.body.carname,
     sellingprice: req.body.sellingprice,
+    predictedprice: "",
     totalkmdriven: req.body.totalkmdriven,
     mobilenumber: req.body.mobilenumber,
     location: req.body.location,

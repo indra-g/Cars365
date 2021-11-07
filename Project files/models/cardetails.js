@@ -4,6 +4,7 @@ var cardetails = new mongoose.Schema({
     carcompany: String,
     carname: String,
     sellingprice: Number,
+    predictedprice: Number,
     totalkmdriven: Number,
     mobilenumber: Number,
     location: String,
