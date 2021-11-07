@@ -49,11 +49,11 @@ app.get("/", function (req, res) {
 });
 
 app.post("/updatedb", function (req, res) {
-  const days = req.body.numberofdays;
+  const time = req.body.numberofdays;
   auctionCarDetailsModel.findByIdAndUpdate(
     "6187e6e3eaebc767a0e11586",
     {
-      daysleft: days,
+      time: time,
     },
     function (err, result) {
       if (err) {
@@ -72,7 +72,7 @@ app.post("/upload", upload.array("images", 4), function (req, res, next) {
     carname: req.body.carname,
     startingbidprice: req.body.startingbiddingprice,
     currentbidprice: "",
-    daysleft: req.body.numberofdays,
+    time: req.body.numberofdays,
     carownername: req.body.firstname,
     location: req.body.location,
     totalkmdriven: req.body.totalkmdriven,

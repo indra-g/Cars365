@@ -79,7 +79,7 @@
             <h4><%= item.carname %></h4>
             <h5>Starting Bidding Price : ₹ <%= item.startingbidprice %></h5>
             <h5>Current Bidding Price : ₹ <%= item.currentbidprice %></h5>
-            <h5 class="time">Days Left : <%= item.daysleft %></h5>
+            <h5 class="time"><%= item.time %></h5>
             <div class="line"></div>
             <h6>Car Owner Name : <%= item.carownername %></h6>
             <h6>Location : <%= item.location %></h6>
@@ -124,5 +124,6 @@
         </div>
       </div>
     </div>
+    <script src="js/auctioncartime.js"></script>
   </body>
 </html>
