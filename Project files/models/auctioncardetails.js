@@ -3,7 +3,7 @@ var auctioncardetails = new mongoose.Schema({
   carname: String,
   startingbidprice: Number,
   currentbidprice: Number,
-  daysleft: Number,
+  time: String,
   carownername: String,
   location: String,
   totalkmdriven: Number,

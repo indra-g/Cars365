@@ -26,14 +26,15 @@
           Current Bider Mobile Number: +91 <%= item.currentbidermobilenumber %>
         </h4>
         <h4>Current Biding Price: ₹ <%= item.currentbidprice %></h4>
-        <h4>Number of days left for auction: <%= item.daysleft %> days left</h4>
+        <h4 class="time">Auction will end in: <%= item.time %></h4>
       </div>
       <div class="line"></div>
       <div class="textfields">
         <form action="/updatedb" method="post">
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label"
-              >Number of Days</label
+              >Enter the data of end of auction (For Ex:
+              <strong>Nov 12, 2021 00:00:00</strong>)</label
             >
             <input
               type="text"
@@ -45,7 +46,7 @@
               autocomplete="off"
             />
           </div>
-          <button type="submit" class="btn btn-dark">Update Days Left</button>
+          <button type="submit" class="btn btn-dark">Modify Time Left</button>
           <h4 class="margin"><%= status %></h4>
         </form>
       </div>
@@ -58,5 +59,6 @@
         New Auction
       </button>
     </div>
+    <script src="js/time.js"></script>
   </body>
 </html>

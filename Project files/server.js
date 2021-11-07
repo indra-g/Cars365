@@ -115,6 +115,7 @@ app.get("/auctioncar", function (req, res) {
   auctionCarDetailsModel.findById(
     "6187e6e3eaebc767a0e11586",
     function (err, theitem) {
+      console.log(theitem);
       auctioncardetail = theitem;
       if (err) {
         console.log(err);
