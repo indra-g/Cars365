@@ -1,0 +1,118 @@
+/* Navbar Section */
+.navbar-nav > li {
+  padding-left: 30px;
+  padding-right: 105px;
+}
+li:hover {
+  text-decoration: underline;
+}
+#first {
+  border-left: 2px solid #000;
+  padding-left: 50px;
+  text-decoration: underline;
+}
+.active {
+  color: black;
+}
+.background {
+  background-color: #c4c4c463;
+  margin: 30px;
+  margin-top: 0px;
+  border-radius: 25px;
+  padding: 40px;
+}
+/* Brand Selection */
+.heading {
+  margin-bottom: 40px;
+  margin-left: 30px;
+}
+.col {
+  text-align: center;
+  padding-left: 0;
+}
+.row2 {
+  margin-top: 40px;
+}
+.line {
+  border: 1px solid black;
+  margin: 40px 0;
+}
+.heading1,
+.dropdown,
+.car-details {
+  display: inline-block;
+}
+.location {
+  margin-left: 7%;
+  font-size: larger;
+}
+.dropdown {
+  margin-left: 5px;
+}
+.card {
+  margin-left: 30px;
+  border-radius: 5px;
+}
+.card-body {
+  background-color: #2d2f36;
+  color: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  text-align: start;
+}
+.row {
+  align-items: center;
+}
+.card-title {
+  text-align: start;
+}
+.button {
+  margin-top: 10px;
+}
+.card-text {
+  display: inline-block;
+}
+.arrow {
+  margin-left: 130px;
+}
+.width {
+  width: 55%;
+}
+.last {
+  display: flex;
+}
+.carousel-inner {
+  text-align: -webkit-center;
+}
+.line1 {
+  border: 0.1px solid black;
+  margin: 0 90px;
+}
+.toptexts,
+.bottomtexts {
+  text-align: start;
+  margin: 20px 0;
+  margin-left: 140px;
+}
+.margin {
+  margin-left: 10px;
+}
+.mar {
+  margin-top: 40px;
+  width: 25%;
+}
+.container {
+  text-align: center;
+}
+.arrow1 {
+  margin-left: 80px;
+}
+.scroll {
+  width: 600px;
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.form{
+  display: inline-block;
+}

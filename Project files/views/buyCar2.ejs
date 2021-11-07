@@ -1,0 +1,145 @@
+<%-include("header")-%> 
+<div class="background">
+      <h3 class="heading heading1">Cars available to buy</h3>
+      <h4 class="heading1 location">Select your location:</h4>
+      <div class="dropdown">
+        <button
+          class="btn btn-outline-dark dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton2"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <%= displaylocation %>
+        </button>
+        <ul
+          class="dropdown-menu dropdown-menu-dark"
+          aria-labelledby="dropdownMenuButton2"
+        >
+          <li><a class="dropdown-item" href="/buycaralllocations">All Cities</a></li>
+          <li><a class="dropdown-item" href="/buycarbang">Bangalore</a></li>
+          <li><a class="dropdown-item" href="/buycarhyderabad">Hyderabad</a></li>
+          <li><a class="dropdown-item" href="/buycarchennai">Chennai</a></li>
+          <li><a class="dropdown-item" href="/buycarthiruvananthapuram">Thiruvananthapuram</a></li>
+          <li><a class="dropdown-item" href="/buycarmumbai">Mumbai</a></li>
+        </ul>
+      </div>
+      <button class="btn-dark btn margin" onclick="window.location.href='/buycar'">Select Company</button>
+
+      <div class="container">
+        <div class="row align-items-start">
+          <div class="col scroll">
+            <% items.forEach(element => { %>
+            <div class="card mb-3" style="max-width: 540px">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img
+                    src="data:image/<%=element.img1.contentType%>;base64,
+                    <%=element.img1.data.toString('base64')%>"
+                    class="img-fluid rounded-start"
+                    alt="car_img"
+                  />
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= element.carname %></h5>
+                    <p class="card-text">Seller Price : ₹ <%= element.sellingprice %></p>
+                    <form class="form" method="post" action="/buycargetdetails">
+                      <input type="hidden" name="elementid" value="<%=element._id%>">
+                    <a class="arrow1" onclick="this.parentNode.submit();"
+                      ><img src="images/arrow_right_white_48dp.svg" alt="arrow1"
+                    /></a>
+                    </form>
+                    <p class="card-text last">Location: <%= element.location %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+          <div class="col">
+            <div
+              id="carouselExampleFade"
+              class="carousel slide carousel-fade carousel-dark"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img
+                    src="data:image/<%=displayitem.img1.contentType%>;base64,
+                    <%=displayitem.img1.data.toString('base64')%>"
+                    class="d-block width"
+                    alt="..."
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="data:image/<%=displayitem.img2.contentType%>;base64,
+                    <%=displayitem.img2.data.toString('base64')%>"
+                    class="d-block width"
+                    alt="..."
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="data:image/<%=displayitem.img3.contentType%>;base64,
+                    <%=displayitem.img3.data.toString('base64')%>"
+                    class="d-block width"
+                    alt="..."
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="data:image/<%=displayitem.img4.contentType%>;base64,
+                    <%=displayitem.img4.data.toString('base64')%>"
+                    class="d-block width"
+                    alt="..."
+                  />
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleFade"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleFade"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+            <div class="toptexts">
+              <h4><%= displayitem.carname %></h4>
+              <h5>Seller Price : ₹ <%= displayitem.sellingprice %></h5>
+              <h5>Predicted Price : ₹ <%= displayitem.predictedprice %></h5>
+            </div>
+            <div class="line1"></div>
+            <div class="bottomtexts">
+              <h6>Seller name : <%= displayitem.name %></h6>
+              <h6>Location : <%= displayitem.location %></h6>
+              <h6>Total KM driven : <%= displayitem.totalkmdriven %> km</h6>
+              <h6>Contact Details : +91 <%= displayitem.mobilenumber %></h6>
+              <button type="button" class="btn btn-dark btn-sm button">
+                Contact Seller
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </body>
+</html>
