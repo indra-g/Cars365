@@ -5,6 +5,7 @@ var multer = require("multer");
 var fs = require("fs");
 var path = require("path");
 var ejs = require("ejs");
+require("dotenv/config");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -12,7 +13,7 @@ app.set("view engine", "ejs");
 var status = "";
 var auctionCarDetailsModel = require(__dirname +
   "/models/auctioncardetails.js");
-mongoose.connect("mongodb://localhost:27017/Cars365DB", function () {
+mongoose.connect(process.env.DB_Host, function () {
   console.log("Succesfully connected to database 🔥");
 });
 var storage = multer.diskStorage({
@@ -31,7 +32,7 @@ app.get("/updateauction", function (req, res) {
 
 app.get("/", function (req, res) {
   auctionCarDetailsModel.findById(
-    "618671f5d44d2e9f44b2e06a",
+    "6187e6e3eaebc767a0e11586",
     function (err, item) {
       if (err) {
         console.log(err);
@@ -39,7 +40,7 @@ app.get("/", function (req, res) {
       } else {
         res.render("homepage", {
           item: item,
-          status: status
+          status: status,
         });
         status = "";
       }
@@ -50,7 +51,7 @@ app.get("/", function (req, res) {
 app.post("/updatedb", function (req, res) {
   const days = req.body.numberofdays;
   auctionCarDetailsModel.findByIdAndUpdate(
-    "618671f5d44d2e9f44b2e06a",
+    "6187e6e3eaebc767a0e11586",
     {
       daysleft: days,
     },
@@ -106,7 +107,7 @@ app.post("/upload", upload.array("images", 4), function (req, res, next) {
     },
   };
   auctionCarDetailsModel.replaceOne(
-    { _id: "618671f5d44d2e9f44b2e06a" },
+    { _id: "6187e6e3eaebc767a0e11586" },
     auctioncardata,
     (err, item) => {
       if (err) {
@@ -122,6 +123,6 @@ app.post("/upload", upload.array("images", 4), function (req, res, next) {
   );
 });
 
-app.listen(5050, function () {
+app.listen(process.env.Port, function () {
   console.log("Server is up and running on port 5050");
 });

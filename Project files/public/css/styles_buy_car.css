@@ -105,5 +105,14 @@ li:hover {
   text-align: center;
 }
 .arrow1 {
-  margin-left: 100px;
+  margin-left: 80px;
+}
+.scroll {
+  width: 600px;
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.form{
+  display: inline-block;
 }

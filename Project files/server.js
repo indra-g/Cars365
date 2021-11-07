@@ -5,6 +5,7 @@ var multer = require("multer");
 var fs = require("fs");
 var path = require("path");
 var _ = require("lodash");
+require('dotenv/config');
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -13,7 +14,7 @@ var carDetailsModel = require(__dirname + "/models/cardetails.js");
 var rentCarDetailsModel = require(__dirname + "/models/rentcardetails.js");
 var auctionCarDetailsModel = require(__dirname +
   "/models/auctioncardetails.js");
-mongoose.connect("mongodb://localhost:27017/Cars365DB", function () {
+mongoose.connect(process.env.DB_Host, function () {
   console.log("Succesfully connected to database 🔥");
 });
 var storage = multer.diskStorage({
@@ -50,12 +51,41 @@ nullitem = {
     contentType: "**",
   },
 };
+nummitemforbuy = {
+  name: "**",
+  carcompany: "**",
+  carname: "**",
+  sellingprice: "**",
+  predictedprice: "**",
+  totalkmdriven: "**",
+  mobilenumber: "**",
+  location: "**",
+  purpose: "**",
+  img1: {
+    data: "**",
+    contentType: "**",
+  },
+  img2: {
+    data: "**",
+    contentType: "**",
+  },
+  img3: {
+    data: "**",
+    contentType: "**",
+  },
+  img4: {
+    data: "**",
+    contentType: "**",
+  },
+};
 var requestedid = "";
 var requestedcity = "";
 var status = "";
 var startingbiddingprice = "";
 var currentbiddingprice = "";
 var company = "";
+var mlocation = "";
+var mrequestedcarid = "";
 app.get("/", function (req, res) {
   carDetailsModel.find({}, (err, items) => {
     if (err) {
@@ -83,7 +113,7 @@ app.get("/sellcar", function (req, res) {
 
 app.get("/auctioncar", function (req, res) {
   auctionCarDetailsModel.findById(
-    "618671f5d44d2e9f44b2e06a",
+    "6187e6e3eaebc767a0e11586",
     function (err, theitem) {
       auctioncardetail = theitem;
       if (err) {
@@ -201,43 +231,221 @@ app.get("/:cityname", function (req, res) {
     case "rentmumbai":
       rentfindcity("Mumbai", res, requestedid);
       break;
+    case "buycaralllocations":
+      mlocation = "All Cities";
+      buycardetails("All Cities", company, res, mrequestedcarid);
+      break;
+    case "buycarbang":
+      mlocation = "Bangalore";
+      buycardetails("Bangalore", company, res, mrequestedcarid);
+      break;
+    case "buycarhyderabad":
+      mlocation = "Hyderabad";
+      buycardetails("Hyderabad", company, res, mrequestedcarid);
+      break;
+    case "buycarchennai":
+      mlocation = "Chennai";
+      buycardetails("Chennai", company, res, mrequestedcarid);
+      break;
+    case "buycarthiruvananthapuram":
+      mlocation = "Thiruvananthapuram";
+      buycardetails("Thiruvananthapuram", company, res, mrequestedcarid);
+      break;
+    case "buycarmumbai":
+      mlocation = "Mumbai";
+      buycardetails("Mumbai", company, res, mrequestedcarid);
+      break;
   }
 });
 
-function buycardetails(company, res) {
-  if (company == "AllCompanies") {
-    carDetailsModel.find({}, (err, items) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("An error occurred", err);
+function buycardetails(location, company, res, requesteddetailid) {
+  if (requesteddetailid == "") {
+    if (location == "All Cities") {
+      if (company == "AllCompanies") {
+        carDetailsModel.find({}, (err, items) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("An error occurred", err);
+          } else {
+            if (items.length == 0) {
+              res.render("buyCar2", {
+                stylesheet: "css/styles_buy_car.css",
+                items: items,
+                displaylocation: "All Cities",
+                displayitem: nummitemforbuy,
+              });
+            } else {
+              res.render("buyCar2", {
+                stylesheet: "css/styles_buy_car.css",
+                items: items,
+                displaylocation: "All Cities",
+                displayitem: items[0],
+              });
+            }
+          }
+        });
       } else {
-        res.render("buyCar2", {
-          stylesheet: "css/styles_buy_car.css",
-          items: items,
+        carDetailsModel.find({ carcompany: company }, (err, items) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("An error occurred", err);
+          } else {
+            if (items.length == 0) {
+              res.render("buyCar2", {
+                stylesheet: "css/styles_buy_car.css",
+                items: items,
+                displaylocation: "All Cities",
+                displayitem: nummitemforbuy,
+              });
+            } else {
+              res.render("buyCar2", {
+                stylesheet: "css/styles_buy_car.css",
+                items: items,
+                displaylocation: "All Cities",
+                displayitem: items[0],
+              });
+            }
+          }
         });
       }
-    });
-    company = "";
+    } else {
+      if (company == "AllCompanies") {
+        carDetailsModel.find({ location: location }, (err, items) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("An error occurred", err);
+          } else {
+            if (items.length == 0) {
+              res.render("buyCar2", {
+                stylesheet: "css/styles_buy_car.css",
+                items: items,
+                displaylocation: location,
+                displayitem: nummitemforbuy,
+              });
+            } else {
+              res.render("buyCar2", {
+                stylesheet: "css/styles_buy_car.css",
+                items: items,
+                displaylocation: location,
+                displayitem: items[0],
+              });
+            }
+          }
+        });
+      } else {
+        carDetailsModel.find(
+          { carcompany: company, location: location },
+          (err, items) => {
+            if (err) {
+              console.log(err);
+              res.status(500).send("An error occurred", err);
+            } else {
+              if (items.length == 0) {
+                res.render("buyCar2", {
+                  stylesheet: "css/styles_buy_car.css",
+                  items: items,
+                  displaylocation: location,
+                  displayitem: nummitemforbuy,
+                });
+              } else {
+                res.render("buyCar2", {
+                  stylesheet: "css/styles_buy_car.css",
+                  items: items,
+                  displaylocation: location,
+                  displayitem: items[0],
+                });
+              }
+            }
+          }
+        );
+      }
+    }
   } else {
-    carDetailsModel.find({ carcompany: company }, (err, items) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("An error occurred", err);
+    if (location == "All Cities") {
+      if (company == "AllCompanies") {
+        carDetailsModel.find({}, (err, items) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("An error occurred", err);
+          } else {
+            carDetailsModel.findById(requesteddetailid, function (err, item) {
+              res.render("buyCar2", {
+                stylesheet: "css/styles_buy_car.css",
+                items: items,
+                displaylocation: location,
+                displayitem: item,
+              });
+            });
+          }
+        });
       } else {
-        res.render("buyCar2", {
-          stylesheet: "css/styles_buy_car.css",
-          items: items,
+        carDetailsModel.find({ carcompany: company }, (err, items) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("An error occurred", err);
+          } else {
+            carDetailsModel.findById(requesteddetailid, function (err, item) {
+              res.render("buyCar2", {
+                stylesheet: "css/styles_buy_car.css",
+                items: items,
+                displaylocation: location,
+                displayitem: item,
+              });
+            });
+          }
         });
       }
-    });
-    company = "";
+    } else {
+      if (company == "AllCompanies") {
+        carDetailsModel.find({ location: location }, (err, items) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("An error occurred", err);
+          } else {
+            carDetailsModel.findById(requesteddetailid, function (err, item) {
+              res.render("buyCar2", {
+                stylesheet: "css/styles_buy_car.css",
+                items: items,
+                displaylocation: location,
+                displayitem: item,
+              });
+            });
+          }
+        });
+      } else {
+        carDetailsModel.find(
+          { carcompany: company, location: location },
+          (err, items) => {
+            if (err) {
+              console.log(err);
+              res.status(500).send("An error occurred", err);
+            } else {
+              carDetailsModel.findById(requesteddetailid, function (err, item) {
+                res.render("buyCar2", {
+                  stylesheet: "css/styles_buy_car.css",
+                  items: items,
+                  displaylocation: location,
+                  displayitem: item,
+                });
+              });
+            }
+          }
+        );
+      }
+    }
   }
 }
+app.post("/buycargetdetails", function (req, res) {
+  const requestedcarid = req.body.elementid;
+  mrequestedcarid = requestedcarid;
+  buycardetails(mlocation, company, res, requestedcarid);
+});
 
 app.post("/updatecompany", function (req, res) {
   const companyname = req.body.companyname;
   company = companyname;
-  buycardetails(company, res);
+  mlocation = "All Cities";
+  buycardetails(mlocation, company, res, mrequestedcarid);
 });
 
 app.post("/uploadauction", function (req, res) {
@@ -247,7 +455,7 @@ app.post("/uploadauction", function (req, res) {
   if (currentbiddingprice == "" || currentbiddingprice < price) {
     if (startingbiddingprice < price) {
       auctionCarDetailsModel.findByIdAndUpdate(
-        "618671f5d44d2e9f44b2e06a",
+        "6187e6e3eaebc767a0e11586",
         {
           currentbidername: name,
           currentbidermobilenumber: number,
@@ -326,12 +534,12 @@ app.post("/upload", upload.array("images", 4), (req, res, next) => {
     if (err) {
       res.render("sellCar", {
         status: "Unable to upload at the moment please try again later",
-        stylesheet: "css/styles_give_car_for_rent.css",
+        stylesheet: "css/styles_sell_car.css",
       });
     } else {
       res.render("sellCar", {
         status: "Successfully Uploaded 🔥",
-        stylesheet: "css/styles_give_car_for_rent.css",
+        stylesheet: "css/styles_sell_car.css",
       });
     }
   });
@@ -375,17 +583,17 @@ app.post("/rentupload", upload.array("images", 4), (req, res, next) => {
     if (err) {
       res.render("sellCar", {
         status: "Unable to upload at the moment please try again later",
-        stylesheet: "css/styles_sell_car.css",
+        stylesheet: "css/styles_give_car_for_rent.css",
       });
     } else {
       res.render("giveACarForRent", {
         status: "Successfully Uploaded 🔥",
-        stylesheet: "css/styles_sell_car.css",
+        stylesheet: "css/styles_give_car_for_rent.css",
       });
     }
   });
 });
 
-app.listen("4040", function () {
+app.listen(process.env.Port, function () {
   console.log("Server is up and running on port 4040 🔥");
 });
