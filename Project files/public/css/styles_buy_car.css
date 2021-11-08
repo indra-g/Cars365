@@ -116,3 +116,6 @@ li:hover {
 .form{
   display: inline-block;
 }
+.text {
+  font-weight: bolder;
+}
