@@ -65,3 +65,6 @@ li:hover {
 .mar{
   margin: 100px 70px 0;
 }
+.time{
+  visibility: hidden;
+}

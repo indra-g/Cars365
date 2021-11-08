@@ -21,4 +21,5 @@ var x = setInterval(function () {
     clearInterval(x);
     document.getElementById("time")[0].innerHTML = "Auction is about to end";
   }
+  document.getElementsByClassName("time")[0].style.visibility = "visible";
 }, 1000);
