@@ -5,8 +5,9 @@ var multer = require("multer");
 var fs = require("fs");
 var path = require("path");
 var _ = require("lodash");
-require('dotenv/config');
+require("dotenv/config");
 app.use(express.static("public"));
+const { spawn } = require("child_process");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set("view engine", "ejs");
@@ -464,7 +465,7 @@ app.post("/uploadauction", function (req, res) {
           if (err) {
             console.log(err);
           } else {
-            status = "Succesfully Updated your request 🔥";
+            status = "Succesfully Updated your request";
           }
         }
       );
@@ -494,12 +495,25 @@ app.post("/getdetails", function (req, res) {
 });
 
 app.post("/upload", upload.array("images", 4), (req, res, next) => {
+  var pred_value="";
+  const pycode = spawn("python", [
+    "js_connect.py",
+    req.body.carname,
+    req.body.company,
+    req.body.totalkmdriven,
+  ]);
+
+  pycode.stdout.on("data", function (data) {
+    pred_value = data;
+    pred_value = parseInt(pred_value);
+  });
+
   var obj = {
     name: req.body.firstname,
     carcompany: req.body.company,
     carname: req.body.carname,
     sellingprice: req.body.sellingprice,
-    predictedprice: "",
+    predictedprice: pred_value,
     totalkmdriven: req.body.totalkmdriven,
     mobilenumber: req.body.mobilenumber,
     location: req.body.location,
@@ -537,7 +551,7 @@ app.post("/upload", upload.array("images", 4), (req, res, next) => {
       });
     } else {
       res.render("sellCar", {
-        status: "Successfully Uploaded 🔥",
+        status: "Successfully Uploaded",
         stylesheet: "css/styles_sell_car.css",
       });
     }
@@ -586,7 +600,7 @@ app.post("/rentupload", upload.array("images", 4), (req, res, next) => {
       });
     } else {
       res.render("giveACarForRent", {
-        status: "Successfully Uploaded 🔥",
+        status: "Successfully Uploaded",
         stylesheet: "css/styles_give_car_for_rent.css",
       });
     }

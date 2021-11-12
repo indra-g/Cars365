@@ -60,7 +60,7 @@ app.post("/updatedb", function (req, res) {
         status = "Unable to Update at the moment please try again later";
         res.redirect("/");
       } else {
-        status = "Succesfully Updated 🔥";
+        status = "Succesfully Updated";
         res.redirect("/");
       }
     }
@@ -116,7 +116,7 @@ app.post("/upload", upload.array("images", 4), function (req, res, next) {
         });
       } else {
         res.render("auctioncaradmin", {
-          status: "Successfully Uploaded 🔥",
+          status: "Successfully Uploaded",
         });
       }
     }
