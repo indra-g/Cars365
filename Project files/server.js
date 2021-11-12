@@ -7,7 +7,6 @@ var path = require("path");
 var _ = require("lodash");
 require("dotenv/config");
 app.use(express.static("public"));
-const { spawn } = require("child_process");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set("view engine", "ejs");
@@ -495,25 +494,12 @@ app.post("/getdetails", function (req, res) {
 });
 
 app.post("/upload", upload.array("images", 4), (req, res, next) => {
-  var pred_value="";
-  const pycode = spawn("python", [
-    "js_connect.py",
-    req.body.carname,
-    req.body.company,
-    req.body.totalkmdriven,
-  ]);
-
-  pycode.stdout.on("data", function (data) {
-    pred_value = data;
-    pred_value = parseInt(pred_value);
-  });
-
   var obj = {
     name: req.body.firstname,
     carcompany: req.body.company,
     carname: req.body.carname,
     sellingprice: req.body.sellingprice,
-    predictedprice: pred_value,
+    predictedprice: "",
     totalkmdriven: req.body.totalkmdriven,
     mobilenumber: req.body.mobilenumber,
     location: req.body.location,
