@@ -5,7 +5,7 @@ var multer = require("multer");
 var fs = require("fs");
 var path = require("path");
 var _ = require("lodash");
-require('dotenv/config');
+require("dotenv/config");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -464,7 +464,7 @@ app.post("/uploadauction", function (req, res) {
           if (err) {
             console.log(err);
           } else {
-            status = "Succesfully Updated your request 🔥";
+            status = "Succesfully Updated your request";
           }
         }
       );
@@ -537,7 +537,7 @@ app.post("/upload", upload.array("images", 4), (req, res, next) => {
       });
     } else {
       res.render("sellCar", {
-        status: "Successfully Uploaded 🔥",
+        status: "Successfully Uploaded",
         stylesheet: "css/styles_sell_car.css",
       });
     }
@@ -586,7 +586,7 @@ app.post("/rentupload", upload.array("images", 4), (req, res, next) => {
       });
     } else {
       res.render("giveACarForRent", {
-        status: "Successfully Uploaded 🔥",
+        status: "Successfully Uploaded",
         stylesheet: "css/styles_give_car_for_rent.css",
       });
     }
