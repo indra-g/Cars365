@@ -3,7 +3,7 @@ import pymongo
 
 model = pickle.load(open('cars365_predictor.pkl', 'rb'))
 
-client = pymongo.MongoClient("mongodb+srv://admin-indra:test123@cars365cluster.8itqx.mongodb.net/Cars365DB?retryWrites=true&w=majority")
+client = pymongo.MongoClient("DB_Host_Link")
 db = client["Cars365DB"]
 col = db["cardetails"]
  
