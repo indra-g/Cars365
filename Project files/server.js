@@ -126,10 +126,10 @@ app.get("/auctioncar", function (req, res) {
           item: theitem,
           status: status,
         });
+        status = "";
       }
     }
   );
-  status = "";
 });
 
 app.get("/rentcar", function (req, res) {
@@ -461,20 +461,18 @@ app.post("/uploadauction", function (req, res) {
           currentbidprice: price,
         },
         function (err, result) {
-          if (err) {
-            console.log(err);
-          } else {
-            status = "Succesfully Updated your request";
-          }
+          status = "Succesfully Updated your request";
+          res.redirect("/auctioncar");
         }
       );
     } else {
       status = "Please Enter the value greater then Starting bidding price";
+      res.redirect("/auctioncar");
     }
   } else if (currentbiddingprice > price) {
     status = "Please Enter the value greater then current bidding price";
+    res.redirect("/auctioncar");
   }
-  res.redirect("/auctioncar");
 });
 
 app.post("/getdetails", function (req, res) {
